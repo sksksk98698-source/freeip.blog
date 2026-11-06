@@ -29,6 +29,7 @@
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.1",
     "@astrojs/mdx": "8.0.1",
+    "@astrojs/sitemap": "^3.7.4",
     "@fortawesome/fontawesome-free": "7.3.0",
     "astro": "7.3.2",
     "katex": "0.18.7",

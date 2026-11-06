@@ -1,31 +1,26 @@
 {
   "items": [
     {
-      "date": "2026-08-25 10:00:00+08:00",
-      "content": "The Astro Solitude demo now uses native Astro content. Explore the guides and make it your own.",
-      "location": "Project repository",
+      "date": "2026-11-05 20:00:00+08:00",
+      "content": "FreeIP 网站完成深度架构纯净化升级，全站资产与 URL 体系实现 100% 独立自主，全面提升静态检索与 SEO 表现。",
+      "location": "FreeIP Lab",
       "image": [
         "/img/demo/cover-getting-started-v2.webp"
       ]
     },
     {
-      "date": "2026-08-23 10:00:00+08:00",
-      "content": "About, friends, equipment, and short updates are all managed with local data files.",
-      "location": "exampleSite",
-      "link": "/p/components/"
+      "date": "2026-10-18 14:30:00+08:00",
+      "content": "深入优化了静态内容集合与元数据生成流程，确保所有 canonical 规范链接与 OpenGraph 标签精准无误。",
+      "location": "网络工作室",
+      "link": "/archives/"
     },
     {
-      "date": "2026-08-21 10:00:00+08:00",
-      "content": "The homepage, posts, taxonomies, search index, and assets now run on Astro.",
-      "location": "hugo",
+      "date": "2026-09-01 09:00:00+08:00",
+      "content": "开启 FreeIP 博客的独立演进之旅，坚持零冗余、低开销、零跟踪的纯粹 Web 理念。",
+      "location": "FreeIP Lab",
       "image": [
         "/img/demo/cover-legacy-url-v2.webp"
       ]
-    },
-    {
-      "date": "2023-04-20 00:00:00+08:00",
-      "content": "The Solitude demo started collecting features, configuration examples, and practical notes.",
-      "location": "Solitude"
     }
   ]
 }

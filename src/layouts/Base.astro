@@ -1,7 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import { applyInitialTheme } from '../scripts/theme-bootstrap';
-import { cfg, config, t, url, absolute, json } from '../lib/site';
+import { cfg, config, t, url, absolute, json, isoDate } from '../lib/site';
 import { getPosts, getPages, contentPath, type Post } from '../lib/content';
 import { runtimeConfig } from '../lib/runtime-config';
 import Header from '../components/Header.astro';
@@ -17,6 +17,7 @@ import aboutStyle from '../styles/pages/about.css?url';
 import brevityStyle from '../styles/pages/brevity.css?url';
 import '../styles/astro.css';
 import '../styles/custom.css';
+
 interface Props {
   title?: string;
   description?: string;
@@ -25,6 +26,7 @@ interface Props {
   page?: import('../lib/page-types').PageMetadata;
   toc?: boolean;
 }
+
 const {
   title = config.title,
   description = config.description,
@@ -33,6 +35,7 @@ const {
   page = {},
   toc = false,
 } = Astro.props;
+
 const posts = await getPosts(),
   pages = await getPages();
 const runtime = runtimeConfig(posts, pages, { ...page, type });
@@ -45,6 +48,7 @@ const pageConfig = {
   comment: page.comment !== false,
   color: page.color ?? false,
 };
+
 const vars = {
   'solitude-theme-light': cfg.theme_color.light,
   'solitude-theme-dark': cfg.theme_color.dark,
@@ -56,9 +60,61 @@ const vars = {
   'solitude-code-font-family': cfg.font.code_font_family,
   'solitude-index-columns': String(cfg.index_post_list.column),
 };
+
 const inlineVars = Object.entries(vars)
   .map(([key, value]) => `--${key}:${value}`)
   .join(';');
+
+const canonicalUrl = post
+  ? absolute(contentPath(post))
+  : new URL(Astro.url.pathname, config.site).href;
+
+const ogImage = post?.data.cover ?? page.cover ?? cfg.site.icon;
+const resolvedOgImage = ogImage ? absolute(ogImage) : undefined;
+const isHomePage = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const pageTitle = isHomePage
+  ? config.title
+  : title && title !== config.title
+    ? `${title} | ${config.title}`
+    : `${title}`;
+
+const jsonLd = post
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': canonicalUrl,
+      },
+      headline: post.data.title,
+      description: description,
+      image: resolvedOgImage ? [resolvedOgImage] : undefined,
+      datePublished: isoDate(post.data.date),
+      dateModified: isoDate(post.data.updated || post.data.date),
+      author: {
+        '@type': 'Person',
+        name: config.author.name,
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: config.title,
+        logo: {
+          '@type': 'ImageObject',
+          url: absolute(cfg.site.icon),
+        },
+      },
+    }
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: config.title,
+      url: config.site,
+      description: config.description,
+      author: {
+        '@type': 'Person',
+        name: config.author.name,
+      },
+    };
 ---
 
 <!doctype html>
@@ -73,16 +129,16 @@ const inlineVars = Object.entries(vars)
       content="width=device-width,initial-scale=1,viewport-fit=cover"
     />
     <meta name="generator" content={Astro.generator} />
-    <title>{type==='solitude'?config.title:`${title} | ${config.title}`}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link
-      rel="canonical"
-      href={
-        post
-          ? absolute(contentPath(post))
-          : new URL(Astro.url.pathname, config.site).href
-      }
+    <meta name="author" content={config.author.name} />
+    <meta
+      name="robots"
+      content={type === '404'
+        ? 'noindex, nofollow'
+        : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}
     />
+    <link rel="canonical" href={canonicalUrl} />
     <link
       rel="alternate"
       type="application/rss+xml"
@@ -90,23 +146,54 @@ const inlineVars = Object.entries(vars)
       href={url('/index.xml')}
     />
     <link rel="icon" href={url(cfg.site.icon)} />
-    <meta property="og:title" content={title} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content={config.title} />
+    <meta property="og:title" content={title || config.title} />
     <meta property="og:description" content={description} />
-    <meta
-      property="og:url"
-      content={
-        post
-          ? absolute(contentPath(post))
-          : new URL(Astro.url.pathname, config.site).href
-      }
-    />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content={post ? 'article' : 'website'} />
-    {(post?.data.cover || page.cover) && (
-      <meta
-        property="og:image"
-        content={absolute((post?.data.cover ?? page.cover)!)}
-      />
+    <meta property="og:locale" content={config.locale.replace('-', '_')} />
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    {post && (
+      <>
+        <meta property="article:published_time" content={isoDate(post.data.date)} />
+        {post.data.updated && (
+          <meta property="article:modified_time" content={isoDate(post.data.updated)} />
+        )}
+        <meta property="article:author" content={config.author.name} />
+        {post.data.categories?.map((cat: string) => (
+          <meta property="article:section" content={cat} />
+        ))}
+        {post.data.tags?.map((tag: string) => (
+          <meta property="article:tag" content={tag} />
+        ))}
+      </>
     )}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title || config.title} />
+    <meta name="twitter:description" content={description} />
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+
+    <!-- Search Engine Webmaster Verification Meta Tags -->
+    {process.env.GOOGLE_SITE_VERIFICATION && (
+      <meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
+    )}
+    {process.env.BING_SITE_VERIFICATION && (
+      <meta name="msvalidate.01" content={process.env.BING_SITE_VERIFICATION} />
+    )}
+    {process.env.BAIDU_SITE_VERIFICATION && (
+      <meta name="baidu-site-verification" content={process.env.BAIDU_SITE_VERIFICATION} />
+    )}
+    {process.env.SHENMA_SITE_VERIFICATION && (
+      <meta name="shenma-site-verification" content={process.env.SHENMA_SITE_VERIFICATION} />
+    )}
+
+    <!-- Schema.org JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
     {cfg.pwa.enable && (
       <>
         <link rel="manifest" href={url(cfg.pwa.manifest)} />

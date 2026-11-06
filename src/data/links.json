@@ -1,8 +1,8 @@
 {
   "links": [
     {
-      "class_name": "Official resources",
-      "class_desc": "Documentation, source code, and updates",
+      "class_name": "核心推荐",
+      "class_desc": "开放标准、技术探索与数字自由",
       "type": "card",
       "link_list": [
         {
@@ -10,35 +10,35 @@
           "link": "https://docs.astro.build/",
           "avatar": "/img/logo.png",
           "topimg": "/img/demo/cover-getting-started-v2.webp",
-          "descr": "Official Astro documentation",
+          "descr": "现代高性能静态网站与内容架构文档",
           "tag": "Docs"
         },
         {
-          "name": "Solitude GitHub",
-          "link": "https://github.com/everfu/astro-solitude",
+          "name": "MDN Web Docs",
+          "link": "https://developer.mozilla.org/",
           "avatar": "/img/logo.png",
           "topimg": "/img/demo/cover-shortcodes-v2.webp",
-          "descr": "Theme source, changes, and issue tracking",
-          "tag": "Source"
+          "descr": "开放互联网技术标准与 Web 开发者权威指南",
+          "tag": "Web"
         }
       ]
     },
     {
-      "class_name": "Built with",
-      "class_desc": "Open tools behind Astro Solitude",
+      "class_name": "技术基石",
+      "class_desc": "支撑现代独立网络站点与自由技术的基础工具",
       "type": "item",
       "link_list": [
         {
           "name": "Astro",
           "link": "https://astro.build/",
           "avatar": "/img/logo.png",
-          "descr": "A fast, flexible site builder"
+          "descr": "零 JS 静态优先的内容驱动网站生成框架"
         },
         {
-          "name": "TypeScript",
-          "link": "https://www.typescriptlang.org/",
-          "avatar": "https://www.typescriptlang.org/favicon-32x32.png",
-          "descr": "Typed browser interactions"
+          "name": "Tailwind CSS",
+          "link": "https://tailwindcss.com/",
+          "avatar": "/img/logo.png",
+          "descr": "高度可定制的现代原子化 CSS 框架"
         }
       ]
     }

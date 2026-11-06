@@ -29,7 +29,7 @@ export async function getRoutes(): Promise<Route[]> {
   const routes: Route[] = chunks.map((items, i) => ({
     path: i ? `/page/${i + 1}/` : '/',
     kind: 'home',
-    title: config.title,
+    title: i ? `${config.title} - 第 ${i + 1} 页` : config.title,
     posts: items,
     current: i + 1,
     total: chunks.length,

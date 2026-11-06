@@ -2,7 +2,7 @@
   "site": {
     "name": {
       "class": "text",
-      "custom": "Solitude"
+      "custom": "FreeIP"
     },
     "icon": "/img/logo.png"
   },
@@ -16,8 +16,8 @@
   "hometop": {
     "enable": true,
     "banner": {
-      "title": "Solitude",
-      "desc": "A fast, elegant and feature-rich Astro theme",
+      "title": "FreeIP Blog",
+      "desc": "探索自由网络与技术边界",
       "icon": {}
     },
     "group": {},
@@ -43,8 +43,8 @@
         "emoji": null,
         "sticker": null
       },
-      "description": "An Astro theme for expressive personal sites.",
-      "content": "Write, collect, and share with Solitude.",
+      "description": "自由网络架构与独立开发者的技术自留地。",
+      "content": "探索技术边界，连接自由世界。",
       "state": {
         "morning": "Good morning",
         "noon": "Good noon",
@@ -70,7 +70,7 @@
       "wordcount": true,
       "updatetime": true,
       "runtimeenable": true,
-      "runtime": "2023-04-20 00:00:00"
+      "runtime": "2026-01-01 00:00:00"
     }
   },
   "page": {
@@ -122,7 +122,7 @@
     "covercolor": {
       "enable": false,
       "mode": "local",
-      "api": "https://api.qjqq.cn/api/Imgcolor?img=",
+      "api": "",
       "time": 43200000
     }
   },
@@ -172,7 +172,7 @@
     "limit": 50,
     "author": "Author: ",
     "link": "Link: ",
-    "source": "Source: Solitude",
+    "source": "来源: FreeIP Blog",
     "info": "",
     "img_error": "Unable to download image",
     "mode": {
@@ -252,7 +252,7 @@
     "mutex": true,
     "order": "list"
   },
-  "meting_api": "https://meting.efu.me/?server=:server&type=:type&id=:id&r=:r",
+  "meting_api": "",
   "keyboard": {
     "enable": false,
     "list": []

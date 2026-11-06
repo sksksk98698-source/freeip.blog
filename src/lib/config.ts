@@ -108,14 +108,14 @@ export function defineSolitudeConfig(
 ): SiteConfig {
   const config = mergeConfig<SiteConfig>(
     {
-      site: 'https://example.org',
+      site: 'https://freeip.blog',
       base: '/',
-      title: 'Solitude',
+      title: 'FreeIP Blog',
       description: 'A place to write, collect, and share.',
       locale: 'en',
       timeZone: 'UTC',
       hasCJKLanguage: false,
-      author: { name: 'Solitude' },
+      author: { name: 'FreeIP' },
       pagination: 10,
       menus: [],
       theme: defaults as ThemeConfig,
